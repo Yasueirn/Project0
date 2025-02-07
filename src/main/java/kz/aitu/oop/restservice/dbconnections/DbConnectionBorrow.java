@@ -33,6 +33,7 @@ public class DbConnectionBorrow {
         ResultSet rs = checkStmt.executeQuery();
 
         if (rs.next() && !rs.getBoolean("is_available")) {
+            System.out.println("Book is NOT available");
             return false; // Книга уже занята
         }
 
