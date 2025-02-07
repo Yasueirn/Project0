@@ -3,6 +3,7 @@ package kz.aitu.oop.restservice.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kz.aitu.oop.restservice.dbconnections.DbConnection;
+import kz.aitu.oop.restservice.dbconnections.DbConnectionBorrow;
 import kz.aitu.oop.restservice.dbconnections.DbConnectionMember;
 import kz.aitu.oop.restservice.entities.Book;
 import kz.aitu.oop.restservice.entities.LibraryMember;
@@ -297,5 +298,43 @@ public class MyController {
         return jsonText;
     }
 
+    //Borrowing ##################################################################
+    //############################################################################
+    //############################################################################
+
+    @PostMapping("/index/borrowBook")
+    public String borrowBook(@RequestParam int memberId, @RequestParam int bookId) {
+        DbConnectionBorrow myConnection = new DbConnectionBorrow();
+        Connection conn = null;
+        boolean success = false;
+
+        try {
+            conn = myConnection.connect();
+            success = myConnection.borrowBook(conn, memberId, bookId);
+        } catch (Exception e) {
+            System.out.println("Something went wrong " + e.toString());
+        }
+
+        return success ? "Book borrowed successfully" : "Failed to borrow book";
     }
+
+    @PostMapping("/index/returnBook")
+    public String returnBook(@RequestParam int memberId, @RequestParam int bookId) {
+        DbConnectionBorrow myConnection = new DbConnectionBorrow();
+        Connection conn = null;
+        boolean success = false;
+
+        try {
+            conn = myConnection.connect();
+            success = myConnection.returnBook(conn, memberId, bookId);
+        } catch (Exception e) {
+            System.out.println("Something went wrong " + e.toString());
+        }
+
+        return success ? "Book returned successfully" : "Failed to return book";
+    }
+
+
+
+}
 

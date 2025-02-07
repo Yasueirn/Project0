@@ -1,5 +1,8 @@
 package kz.aitu.oop.restservice.entities;
 
+
+import java.util.Objects;
+
 public class LibraryMember {
     private int id;
     private String name;
@@ -62,6 +65,18 @@ public class LibraryMember {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        LibraryMember member = (LibraryMember) o;
+        return id == member.id && Objects.equals(name, member.name) && Objects.equals(email, member.email) && Objects.equals(phone, member.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email, phone);
     }
 }
 
