@@ -39,7 +39,7 @@ public class DbConnectionMember {
             member.setId(rs.getInt("id"));
             member.setName(rs.getString("name"));
             member.setEmail(rs.getString("email"));
-            member.setPhone(rs.getString("phonenumber"));
+            member.setPhone(rs.getString("phone"));
             members.add(member);
         }
         st.close();
