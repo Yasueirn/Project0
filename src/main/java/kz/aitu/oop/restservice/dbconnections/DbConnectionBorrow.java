@@ -1,7 +1,9 @@
 package kz.aitu.oop.restservice.dbconnections;
 
+import kz.aitu.oop.restservice.entities.BorrowedBook;
 import java.sql.SQLException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DbConnectionBorrow {
 
@@ -70,6 +72,26 @@ public class DbConnectionBorrow {
 
         stmt.close();
         return result == 1;
+    }
+
+    public ArrayList<BorrowedBook> getInfo(Connection con) throws SQLException{
+
+        String query = "SELECT * FROM borrowed_books";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        ArrayList<BorrowedBook> bbooks = new ArrayList<>();
+        while (rs.next()){
+            BorrowedBook bbook1 = new BorrowedBook();
+            bbook1.setId(rs.getInt("id"));
+            bbook1.setMemberId(rs.getInt("member_id"));
+            bbook1.setBookId(rs.getInt("book_id"));
+            bbook1.setBorrowDate(rs.getTimestamp("borrow_date").toLocalDateTime());
+            bbook1.setReturnDate(rs.getTimestamp("return_date") != null ? rs.getTimestamp("return_date").toLocalDateTime() : null);
+            bbooks.add(bbook1);
+        }
+        st.close();
+        closeConn(con);
+        return bbooks;
     }
 
 

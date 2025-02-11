@@ -9,6 +9,10 @@ public class BorrowedBook {
     private LocalDateTime borrowDate;
     private LocalDateTime returnDate;
 
+    public BorrowedBook() {
+
+    }
+
     public BorrowedBook(int id, int memberId, int bookId, LocalDateTime borrowDate, LocalDateTime returnDate) {
         this.id = id;
         this.memberId = memberId;

@@ -1,6 +1,5 @@
 package kz.aitu.oop.restservice.entities;
 
-
 import java.util.Objects;
 
 public class LibraryMember {

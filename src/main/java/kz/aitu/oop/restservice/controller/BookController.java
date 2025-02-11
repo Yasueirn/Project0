@@ -2,7 +2,7 @@ package kz.aitu.oop.restservice.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kz.aitu.oop.restservice.dbconnections.DbConnection;
+import kz.aitu.oop.restservice.dbconnections.DbConnectionBook;
 import kz.aitu.oop.restservice.entities.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class BookController {
 
     @GetMapping("/index/allBooks")
     public String getallBooks(){
-        DbConnection myConnection = new DbConnection();
+        DbConnectionBook myConnection = new DbConnectionBook();
         Connection conn = null;
         ArrayList<Book> books = new ArrayList<Book>();
         try{
@@ -43,7 +43,7 @@ public class BookController {
 
     @PostMapping("/index/findBook")
     public String findBookByisbn(@RequestParam String isbn){
-        DbConnection myConnection = new DbConnection();
+        DbConnectionBook myConnection = new DbConnectionBook();
         Connection conn = null;
         Book book1 = null;
         try{
@@ -71,7 +71,7 @@ public class BookController {
 
     @PostMapping("/index/createBook")
     public String createBook(@RequestParam String title, @RequestParam String author, @RequestParam String isbn){
-        DbConnection myConnection = new DbConnection();
+        DbConnectionBook myConnection = new DbConnectionBook();
         Connection conn = null;
         Book book1 = new Book(title, author, isbn, true);
         String jsonText = null;
@@ -92,7 +92,7 @@ public class BookController {
 
     @PostMapping("/index/updateBook")
     public String updateBook(@RequestParam String title, @RequestParam String author, @RequestParam String isbn, @RequestParam String oldIsbn){
-        DbConnection myConnection = new DbConnection();
+        DbConnectionBook myConnection = new DbConnectionBook();
         Connection conn = null;
         Book book1 = null;
         String jsonText = null;
@@ -119,7 +119,7 @@ public class BookController {
 
     @PostMapping("/index/updateBookAvailability")
     public String updateBookAvailability(@RequestParam Boolean status, @RequestParam String isbn){
-        DbConnection myConnection = new DbConnection();
+        DbConnectionBook myConnection = new DbConnectionBook();
         Connection conn = null;
         Book book1 = null;
         String jsonText = null;
@@ -146,7 +146,7 @@ public class BookController {
 
     @PostMapping("/index/deleteBook")
     public String deleteBook(@RequestParam String isbn){
-        DbConnection myConnection = new DbConnection();
+        DbConnectionBook myConnection = new DbConnectionBook();
         Connection conn = null;
         Book book1 = null;
         String jsonText = null;

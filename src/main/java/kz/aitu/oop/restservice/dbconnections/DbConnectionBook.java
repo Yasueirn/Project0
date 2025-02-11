@@ -1,10 +1,11 @@
 package kz.aitu.oop.restservice.dbconnections;
+
 import kz.aitu.oop.restservice.entities.Book;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DbConnection {
+public class DbConnectionBook {
 
     private String url = "jdbc:postgresql://localhost:5432/Library_bd";
     private String user = "postgres";
@@ -18,7 +19,7 @@ public class DbConnection {
     }
 
     public int closeConn(Connection con) throws SQLException {
-        if(con != null) {
+        if (con != null) {
             con.close();
             System.out.println("Connection closed");
             return 0;
@@ -27,13 +28,13 @@ public class DbConnection {
         return 1;
     }
 
-    public ArrayList<Book> getAllBooks(Connection con) throws SQLException{
+    public ArrayList<Book> getAllBooks(Connection con) throws SQLException {
 
         String query = "SELECT * FROM Book";
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(query);
         ArrayList<Book> books = new ArrayList<>();
-        while (rs.next()){
+        while (rs.next()) {
             Book book1 = new Book();
             book1.setTitle(rs.getString("title"));
             book1.setAuthor(rs.getString("author"));
@@ -46,7 +47,7 @@ public class DbConnection {
         return books;
     }
 
-    public Book findBookByISBN(Connection conn, String isbn) throws SQLException{
+    public Book findBookByISBN(Connection conn, String isbn) throws SQLException {
 
         String query = "SELECT * FROM Book WHERE isbn=?";
         PreparedStatement st = conn.prepareStatement(query);
@@ -56,7 +57,7 @@ public class DbConnection {
 
         ArrayList<Book> books = new ArrayList<>();
         Book book1 = new Book();
-        while (rs.next()){
+        while (rs.next()) {
             book1.setTitle(rs.getString("title"));
             book1.setAuthor(rs.getString("author"));
             book1.setIsbn(rs.getString("isbn"));
@@ -70,7 +71,7 @@ public class DbConnection {
         return book1;
     }
 
-    public Book createBook(Connection conn, Book book) throws SQLException{
+    public Book createBook(Connection conn, Book book) throws SQLException {
         String query = "INSERT INTO Book (title, author, isbn, is_available) VALUES (?, ?, ?, ?)";
         PreparedStatement st = conn.prepareStatement(query);
         st.setString(1, book.getTitle());
@@ -81,7 +82,7 @@ public class DbConnection {
         int success = st.executeUpdate();
         st.close();
         closeConn(conn);
-        if (success == 1){
+        if (success == 1) {
             System.out.println("Book created successfully");
             return book;
         }
@@ -89,7 +90,7 @@ public class DbConnection {
         return null;
     }
 
-    public Book updateBook(Connection conn, Book b, String title, String author, String isbn, String oldIsbn) throws SQLException{
+    public Book updateBook(Connection conn, Book b, String title, String author, String isbn, String oldIsbn) throws SQLException {
         String query = "UPDATE Book Set title=?, author=?, isbn=? WHERE isbn=?";
         PreparedStatement st = conn.prepareStatement(query);
         st.setString(1, title);
@@ -100,7 +101,7 @@ public class DbConnection {
         int success = st.executeUpdate();
         st.close();
         closeConn(conn);
-        if (success == 1){
+        if (success == 1) {
             System.out.println("Book updated successfully");
             return b;
 
@@ -108,7 +109,7 @@ public class DbConnection {
         return null;
     }
 
-    public Book updateBookAvailability(Connection conn, Book b, String isbn, Boolean status) throws SQLException{
+    public Book updateBookAvailability(Connection conn, Book b, String isbn, Boolean status) throws SQLException {
         String query = "UPDATE Book SET title=?, author=?, is_available=? WHERE isbn=?";
         PreparedStatement st = conn.prepareStatement(query);
         st.setString(1, b.getTitle());
@@ -120,7 +121,7 @@ public class DbConnection {
         st.close();
         closeConn(conn);
 
-        if (success == 1){
+        if (success == 1) {
             System.out.println("Book updated successfully");
             return b;
         }
@@ -128,7 +129,7 @@ public class DbConnection {
         return null;
     }
 
-    public Book deleteBook(Connection conn, Book book) throws SQLException{
+    public Book deleteBook(Connection conn, Book book) throws SQLException {
         String query = "DELETE FROM Book WHERE isbn=?";
         PreparedStatement st = conn.prepareStatement(query);
         st.setString(1, book.getIsbn());
@@ -136,7 +137,7 @@ public class DbConnection {
         int success = st.executeUpdate();
         st.close();
         closeConn(conn);
-        if (success == 1){
+        if (success == 1) {
             System.out.println("Book deleted successfully");
             return book;
         }
